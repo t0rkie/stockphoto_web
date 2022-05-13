@@ -1,24 +1,33 @@
 import axios from "axios"
 import React from "react"
+import FD, { Headers } from "form-data"
 
 const UploadPhoto = () => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault()
-    console.log(event.currentTarget.value)
-    console.log(event.target.value)
-    // multipart/form-data形式からapplication/x-www-form-urlencodedへ
-    const data = new FormData(event.currentTarget);
     // const data = new FormData()
-    // data.append("")
-    console.log(data.getAll("photoPrice"))
+    const data = new FD()
+    const headers = new Headers()
+    headers.
+  
+    // const config = { headers: {'Content-Type': `multipart/form-data; boundary=${data._boundary}`} };
+    const config = { headers: { 'Content-Type': `multipart/form-data;` }}
+
+    // const data = new FormData(event.currentTarget);
+
+    data.append("image", event.currentTarget["image"].files[0])
+    data.append("photoPrice", event.currentTarget["photoPrice"].value);
+    data.append("description", event.currentTarget["description"].value)
+    
     const params = new URLSearchParams(data as any)
-    axios.post("http://localhost:8080/api/photo/store", params)
+    axios
+      .post("http://localhost:8080/api/photo/store",params, config)
   }
 
   return (
     <div>
-      <form onSubmit={(event) => handleSubmit(event)}>
+      <form onSubmit={(event) => handleSubmit(event)} encType="multipart/form-data">
         <input type="file" id="image" name="image" multiple />
         <br />
         <input type="number" id="photoPrice" name="photoPrice" />
