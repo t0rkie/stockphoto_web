@@ -32,3 +32,21 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+```
+
+  yarn dev
+    Starts the development server.
+
+  yarn build
+    Builds the app for production.
+
+  yarn start
+    Runs the built app in production mode.
+
+We suggest that you begin by typing:
+
+  cd stockphoto_web
+  yarn dev
+
+```
