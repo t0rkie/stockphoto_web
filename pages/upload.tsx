@@ -1,28 +1,25 @@
 import axios from "axios"
 import React from "react"
-import FD, { Headers } from "form-data"
 
 const UploadPhoto = () => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault()
-    // const data = new FormData()
-    const data = new FD()
-    const headers = new Headers()
-    headers.
+    const data = new FormData()
   
-    // const config = { headers: {'Content-Type': `multipart/form-data; boundary=${data._boundary}`} };
-    const config = { headers: { 'Content-Type': `multipart/form-data;` }}
-
-    // const data = new FormData(event.currentTarget);
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    }
 
     data.append("image", event.currentTarget["image"].files[0])
     data.append("photoPrice", event.currentTarget["photoPrice"].value);
     data.append("description", event.currentTarget["description"].value)
     
-    const params = new URLSearchParams(data as any)
+    // const params = new URLSearchParams(data as any)
     axios
-      .post("http://localhost:8080/api/photo/store",params, config)
+      .post("http://localhost:8080/api/photo/store", data, config)
   }
 
   return (
