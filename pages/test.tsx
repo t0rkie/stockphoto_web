@@ -17,7 +17,7 @@ const InputImage = () => {
         (uri) => {
           resolve(uri as string)
         },
-        'base64'
+        'blob'
       )
     ))
   )

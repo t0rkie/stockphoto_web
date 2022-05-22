@@ -1,10 +1,33 @@
 import axios from "axios"
 import React from "react"
+import Resizer from "react-image-file-resizer";
 
 const UploadPhoto = () => {
 
-  const handleSubmit = (event: any) => {
+  const resizeImage = (file: Blob): Promise<string> => (
+    new Promise(resolve => (
+      Resizer.imageFileResizer(
+        file,
+        300,
+        400,
+        'JPEG',
+        100,
+        0,
+        (uri) => {
+          resolve(uri as string)
+        },
+        'blob'
+      )
+    ))
+  )
+
+  const handleSubmit = async (event: any) => {
     event.preventDefault()
+
+    const photoPrice = event.currentTarget["photoPrice"].value
+    const desc = event.currentTarget["description"].value
+    const image = await resizeImage(event.currentTarget["image"].files[0])
+    
     const data = new FormData()
   
     const config = {
@@ -13,11 +36,10 @@ const UploadPhoto = () => {
       }
     }
 
-    data.append("image", event.currentTarget["image"].files[0])
-    data.append("photoPrice", event.currentTarget["photoPrice"].value);
-    data.append("description", event.currentTarget["description"].value)
+    data.append("image", image)
+    data.append("photoPrice", photoPrice);
+    data.append("description", desc)
     
-    // const params = new URLSearchParams(data as any)
     axios
       .post("http://localhost:8080/api/photo/store", data, config)
   }
